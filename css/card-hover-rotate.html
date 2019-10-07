@@ -11,6 +11,7 @@
       margin: 0;
       padding: 0;
       height: 100vh;
+      font-family: Helvetica, Arial, sans-serif;
     }
     .card-list {
       position: relative;
@@ -20,6 +21,7 @@
       padding: 0 10%;
       margin: 0;
       height: 100%;
+      pointer-events: none;
     }
     .card-list::after {
       content: '';
@@ -41,6 +43,7 @@
       background-color: white;
       box-shadow: 0 0 10px 0 #ddd;
       transition: all .5s;
+      pointer-events: all;
     }
     .card div {
       width: 75px;
@@ -52,17 +55,44 @@
       background-color: #ea5454;
       font-size: 32px;
     }
-    .card:nth-child(1):hover ~ .card:nth-child(2) {
-      transform: perspective(500px) rotateY(-20deg);
+
+    .card-list:hover .card {
+      transform: perspective(500px) rotateY(20deg);
     }
-    .card:nth-child(1):hover ~ .card:nth-child(3) {
-      transform: perspective(500px) rotateY(-25deg);
+
+    .card:nth-child(1):hover {
+      transform: none;
     }
-    .card:nth-child(1):hover ~ .card:nth-child(4) {
+    .card:nth-child(1):hover ~ .card {
       transform: perspective(500px) rotateY(-30deg);
     }
-    .card:nth-child(1):hover ~ .card:nth-child(5) {
-      transform: perspective(500px) rotateY(-35deg);
+
+    .card:nth-child(2):hover {
+      transform: none;
+    }
+    .card:nth-child(2):hover ~ .card {
+      transform: perspective(500px) rotateY(-30deg);
+    }
+
+    .card:nth-child(3):hover {
+      transform: none;
+    }
+    .card:nth-child(3):hover ~ .card {
+      transform: perspective(500px) rotateY(-30deg);
+    }
+
+    .card:nth-child(4):hover {
+      transform: none;
+    }
+    .card:nth-child(4):hover ~ .card {
+      transform: perspective(500px) rotateY(-30deg);
+    }
+
+    .card:nth-child(5):hover {
+      transform: none;
+    }
+    .card:nth-child(5):hover ~ .card {
+      transform: perspective(500px) rotateY(-30deg);
     }
   </style>
 </head>
