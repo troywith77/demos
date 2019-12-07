@@ -1,5 +1,4 @@
 # demos
 
-## css
-
-[card-hover-rotate](css/card-hover-rotate.html)
+[card-hover-rotate](src/card-hover-rotate.html)
+[layered-parallax-images](src/layered-parallax-images.html)

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 500px;
+      height: 474px;
+      transform: rotate(-30deg) skew(-25deg);
+    }
+
+    .layer {
+      position: absolute;
+    }
+
+    .layer:nth-child(2) {
+      opacity: .8;
+    }
+
+    .layer:nth-child(3) {
+      opacity: .6;
+    }
+
+    .layer:nth-child(4) {
+      opacity: .4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="./assets/jerry.jpg" alt="jerry" class="layer" data-speed="40">
+    <img src="./assets/jerry.jpg" alt="jerry" class="layer" data-speed="30">
+    <img src="./assets/jerry.jpg" alt="jerry" class="layer" data-speed="20">
+    <img src="./assets/jerry.jpg" alt="jerry" class="layer" data-speed="10">
+  </div>
+  <script>
+    document.addEventListener('mousemove', e => {
+      document.querySelectorAll('.layer').forEach((el) => {
+        const delta = +el.dataset.speed * e.x / 300
+        el.style.transform = `translate3d(${delta}px, 0, 0)`
+      })
+    })
+  </script>
+</body>
+</html>
