@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Text Animation</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #000;
+        user-select: none;
+      }
+      h1 {
+        font-size: 50px;
+      }
+      h1 span {
+        color: #fff;
+        opacity: 0;
+        transition: 0.5s;
+        transform: translate3d(0, 50px, 0);
+      }
+      h1 span.fade {
+        opacity: 1;
+        color: rgb(187, 30, 69);
+        transform: translate3d(0, 0, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="text">JUST DIFFERENT</h1>
+
+    <script>
+      const defaultSplitTextOptions = {
+        duration: 1000,
+      };
+
+      class SplitText {
+        constructor(el, options = defaultSplitTextOptions) {
+          this.el = el;
+          this.options = options;
+          this.render = this.render.bind(this);
+          this.init();
+        }
+
+        to(str) {
+          this.init(str);
+        }
+
+        init(str = this.el.textContent) {
+          this.str = str;
+          this.splitedText = [];
+          this.startTimestamp = null;
+          this.start();
+        }
+
+        start() {
+          this.insertFragments();
+          setTimeout(() => {
+            window.requestAnimationFrame(this.render);
+          }, 0);
+        }
+
+        insertFragments() {
+          this.splitedText = this.str.split('');
+          this.el.innerHTML = '';
+
+          this.splitedText.forEach(text => {
+            const styles = {
+              display: text.trim() ? 'inline-block' : '',
+            };
+
+            const styleStr = Object.entries(styles).reduce((style, [k, v]) => {
+              return v ? (style += `${k}: ${v};`) : style;
+            }, '');
+
+            this.el.innerHTML += `<span style="${styleStr}">${text}</span>`;
+          });
+        }
+
+        render(timestamp) {
+          if (!this.startTimestamp) {
+            this.startTimestamp = timestamp;
+          }
+          const process =
+            (timestamp - this.startTimestamp) / this.options.duration;
+          let char = Math.floor(process * (this.splitedText.length - 1));
+          char = Math.min(char, this.splitedText.length - 1);
+
+          const span = this.el.querySelectorAll('span')[char];
+          if (!span.classList.contains('fade')) {
+            span.classList.add('fade');
+          }
+
+          if (process <= 1) {
+            window.requestAnimationFrame(this.render);
+          } else {
+            this.startTimestamp = null;
+          }
+        }
+      }
+
+      const splitText = new SplitText(text);
+
+      setInterval(() => {
+        splitText.to(
+          text.textContent
+            .split('')
+            .reverse()
+            .join('')
+        );
+      }, 3000);
+    </script>
+  </body>
+</html>
