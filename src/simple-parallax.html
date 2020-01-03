@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Simple Parallax</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 200vh;
+      }
+      #container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+      }
+      #parallax {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+      #texts {
+        text-align: center;
+        font-size: 5rem;
+        color: #fff;
+        font-family: cursive;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <img
+        src="https://www.lifeofpix.com/wp-content/uploads/2019/11/Volcan-en-%C3%A9ruption-g-1600x1067.jpg"
+        id="parallax"
+      />
+      <div id="texts">
+        <h1>Parallax Effect</h1>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('scroll', () => {
+        parallax.style.transform = `translate3d(0, ${window.pageYOffset *
+          0.5}px, 0)`
+      })
+    </script>
+  </body>
+</html>
