@@ -39,84 +39,88 @@
 
     <script>
       const defaultSplitTextOptions = {
-        duration: 1000,
-      };
+        duration: 800,
+      }
 
       class SplitText {
         constructor(el, options = defaultSplitTextOptions) {
-          this.el = el;
-          this.options = options;
-          this.render = this.render.bind(this);
-          this.init();
+          this.el = el
+          this.options = options
+          this.render = this.render.bind(this)
+          this.currentIndex = 0
+          this.next()
+          if (this.textList.length) {
+            setInterval(() => {
+              this.next()
+            }, 3000)
+          }
         }
 
-        to(str) {
-          this.init(str);
+        get textList() {
+          return this.options.textList
         }
 
-        init(str = this.el.textContent) {
-          this.str = str;
-          this.splitedText = [];
-          this.startTimestamp = null;
-          this.start();
+        next() {
+          this.str = this.textList[this.currentIndex]
+          this.currentIndex++
+          if (this.currentIndex === this.textList.length) {
+            this.currentIndex = 0
+          }
+          this.splitedText = []
+          this.startTimestamp = null
+          this.start()
         }
 
         start() {
-          this.insertFragments();
+          this.insertFragments()
           setTimeout(() => {
-            window.requestAnimationFrame(this.render);
-          }, 0);
+            window.requestAnimationFrame(this.render)
+          }, 0)
         }
 
         insertFragments() {
-          this.splitedText = this.str.split('');
-          this.el.innerHTML = '';
+          this.splitedText = this.str.split('')
+          this.el.innerHTML = ''
 
           this.splitedText.forEach(text => {
             const styles = {
               display: text.trim() ? 'inline-block' : '',
-            };
+            }
 
             const styleStr = Object.entries(styles).reduce((style, [k, v]) => {
-              return v ? (style += `${k}: ${v};`) : style;
-            }, '');
+              return v ? (style += `${k}: ${v};`) : style
+            }, '')
 
-            this.el.innerHTML += `<span style="${styleStr}">${text}</span>`;
-          });
+            this.el.innerHTML += `<span style="${styleStr}">${text}</span>`
+          })
         }
 
         render(timestamp) {
           if (!this.startTimestamp) {
-            this.startTimestamp = timestamp;
+            this.startTimestamp = timestamp
           }
           const process =
-            (timestamp - this.startTimestamp) / this.options.duration;
-          let char = Math.floor(process * (this.splitedText.length - 1));
-          char = Math.min(char, this.splitedText.length - 1);
+            (timestamp - this.startTimestamp) / this.options.duration
+          let char = Math.floor(process * (this.splitedText.length - 1))
+          char = Math.min(char, this.splitedText.length - 1)
 
-          const span = this.el.querySelectorAll('span')[char];
+          const span = this.el.querySelectorAll('span')[char]
           if (!span.classList.contains('fade')) {
-            span.classList.add('fade');
+            span.classList.add('fade')
           }
 
           if (process <= 1) {
-            window.requestAnimationFrame(this.render);
+            window.requestAnimationFrame(this.render)
           } else {
-            this.startTimestamp = null;
+            this.startTimestamp = null
           }
         }
       }
 
-      const splitText = new SplitText(text);
-
-      setInterval(() => {
-        splitText.to(
-          text.textContent
-            .split('')
-            .reverse()
-            .join('')
-        );
-      }, 3000);
+      const splitText = new SplitText(document.querySelector('#text'), {
+        duration: 1000,
+        textList: ['JUST', 'SIMPLE', 'TEXT', 'ANIMATION'],
+      })
     </script>
   </body>
 </html>
