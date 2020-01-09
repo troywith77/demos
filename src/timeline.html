@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Timeline</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        padding: 30px;
+        font-family: cursive;
+      }
+
+      #container {
+        width: 800px;
+        margin: 0 auto;
+      }
+
+      .timeline-item {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .timeline-item-date {
+        order: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-image: linear-gradient(
+          to right,
+          transparent 0%,
+          transparent 49%,
+          #000 50%,
+          transparent 51%,
+          transparent 100%
+        );
+      }
+
+      .timeline-item-date time {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+      }
+
+      .timeline-item-content {
+        flex: 0 0 40%;
+        background-color: #d05e5e;
+        color: #fff;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+      }
+
+      .timeline-item-content-placeholder {
+        flex: 0 0 40%;
+      }
+
+      .timeline-item-left .timeline-item-content {
+        order: 1;
+      }
+
+      .timeline-item-left .timeline-item-content-placeholder {
+        order: 3;
+      }
+
+      .timeline-item-right .timeline-item-content {
+        order: 3;
+      }
+
+      .timeline-item-right .timeline-item-content-placeholder {
+        order: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      const html = Array.from({ length: 10 }, (_, idx) => {
+        const position = idx % 2 ? 'right' : 'left'
+        return `<div class="timeline-item timeline-item-${position}">
+                  <div class="timeline-item-date">
+                    <time>${new Date().getFullYear()}</time>
+                  </div>
+                  <div class="timeline-item-content">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius
+                    consectetur sequi enim ducimus. Aperiam soluta cumque laudantium,
+                    dolores ipsam expedita provident quae architecto aut rem a id tempora
+                    voluptatem deserunt.
+                  </div>
+                  <div class="timeline-item-content-placeholder"></div>
+                </div>`
+      }).join('')
+
+      container.innerHTML = html
+    </script>
+  </body>
+</html>
